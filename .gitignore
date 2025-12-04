@@ -1,0 +1,39 @@
+# Python虚拟环境
+venv/
+env/
+ENV/
+
+# Python编译文件
+__pycache__/
+*.py[cod]
+*$py.class
+
+# 系统文件
+.DS_Store
+Thumbs.db
+
+# IDE配置文件
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# 日志文件
+*.log
+logs/
+
+# 数据文件
+tencent_free_videos.csv
+tencent_free_videos.json
+
+# 测试覆盖率
+.coverage
+htmlcov/
+
+# 环境变量文件
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local

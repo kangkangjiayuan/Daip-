@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DaiP智能聊天室 - 登录</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        }
+        
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 50%, #fecfef 100%);
+            background-attachment: fixed;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        body::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(circle at 20% 30%, rgba(255,182,193,0.3) 25px, transparent 25px),
+                radial-gradient(circle at 80% 60%, rgba(255,192,203,0.4) 20px, transparent 20px),
+                radial-gradient(circle at 40% 70%, rgba(255,105,180,0.2) 30px, transparent 30px),
+                radial-gradient(circle at 70% 20%, rgba(255,182,193,0.25) 15px, transparent 15px),
+                radial-gradient(circle at 30% 90%, rgba(255,192,203,0.35) 35px, transparent 35px),
+                radial-gradient(circle at 85% 15%, rgba(255,105,180,0.15) 18px, transparent 18px),
+                radial-gradient(circle at 15% 85%, rgba(255,182,193,0.2) 22px, transparent 22px);
+            animation: float 20s ease-in-out infinite;
+        }
+        
+        body::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 50% 50%, rgba(255,255,255,0.1) 0%, transparent 50%);
+            animation: glow 4s ease-in-out infinite alternate;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            25% { transform: translateY(-10px) rotate(1deg); }
+            50% { transform: translateY(0px) rotate(0deg); }
+            75% { transform: translateY(-15px) rotate(-1deg); }
+        }
+        
+        @keyframes glow {
+            0% { opacity: 0.3; }
+            100% { opacity: 0.7; }
+        }
+        
+        /* 浮动粒子效果 */
+        .particles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+        
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: rgba(255,255,255,0.7);
+            border-radius: 50%;
+            animation: particle-float 8s infinite linear;
+        }
+        
+        .particle:nth-child(1) { left: 10%; animation-delay: 0s; }
+        .particle:nth-child(2) { left: 20%; animation-delay: 1s; }
+        .particle:nth-child(3) { left: 30%; animation-delay: 2s; }
+        .particle:nth-child(4) { left: 40%; animation-delay: 3s; }
+        .particle:nth-child(5) { left: 50%; animation-delay: 4s; }
+        .particle:nth-child(6) { left: 60%; animation-delay: 5s; }
+        .particle:nth-child(7) { left: 70%; animation-delay: 6s; }
+        .particle:nth-child(8) { left: 80%; animation-delay: 7s; }
+        .particle:nth-child(9) { left: 90%; animation-delay: 1.5s; }
+        .particle:nth-child(10) { left: 15%; animation-delay: 2.5s; }
+        .particle:nth-child(11) { left: 35%; animation-delay: 3.5s; }
+        .particle:nth-child(12) { left: 55%; animation-delay: 4.5s; }
+        .particle:nth-child(13) { left: 75%; animation-delay: 5.5s; }
+        .particle:nth-child(14) { left: 85%; animation-delay: 6.5s; }
+        .particle:nth-child(15) { left: 95%; animation-delay: 7.5s; }
+        
+        @keyframes particle-float {
+            0% {
+                transform: translateY(100vh) scale(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-10vh) scale(1);
+                opacity: 0;
+            }
+        }
+        
+        .login-container {
+            background: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 30px;
+            box-shadow: 
+                0 8px 32px rgba(255, 105, 180, 0.3),
+                0 0 0 1px rgba(255, 255, 255, 0.2),
+                inset 0 1px 0 rgba(255, 255, 255, 0.4);
+            padding: 50px 40px;
+            width: 100%;
+            max-width: 420px;
+            position: relative;
+            z-index: 10;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            animation: container-fade-in 1s ease-out;
+        }
+        
+        .login-container::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(from 0deg at 50% 50%, 
+                rgba(255,182,193,0.1) 0%, 
+                rgba(255,192,203,0.1) 25%, 
+                rgba(255,105,180,0.1) 50%, 
+                rgba(255,182,193,0.1) 75%, 
+                rgba(255,192,203,0.1) 100%);
+            animation: rotate 20s linear infinite;
+            z-index: -1;
+            opacity: 0.7;
+        }
+        
+        .login-container::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, 
+                rgba(255,255,255,0.3) 0%, 
+                rgba(255,255,255,0.1) 50%, 
+                rgba(255,255,255,0.3) 100%);
+            border-radius: 30px;
+            z-index: -1;
+        }
+        
+        .login-container:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 
+                0 25px 60px rgba(255, 105, 180, 0.4),
+                0 0 0 1px rgba(255, 255, 255, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.5);
+            background: rgba(255, 255, 255, 0.3);
+        }
+        
+        @keyframes container-fade-in {
+            0% {
+                opacity: 0;
+                transform: translateY(30px) scale(0.9);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+        
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .logo-section {
+            text-align: center;
+            margin-bottom: 35px;
+            position: relative;
+        }
+        
+        .logo {
+            font-size: 3rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #E0F6FF, #B0E0E6, #ADD8E6, #87CEEB);
+            background-size: 400% 400%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 12px;
+            animation: gradient-shift 3s ease-in-out infinite, logo-glow 2s ease-in-out infinite alternate;
+            text-shadow: 0 0 30px rgba(135, 206, 235, 0.5);
+            letter-spacing: 2px;
+            position: relative;
+        }
+        
+        .logo::after {
+            content: '🔵';
+            position: absolute;
+            top: -10px;
+            right: -20px;
+            font-size: 1.2rem;
+            animation: sparkle 2s ease-in-out infinite;
+        }
+        
+        .logo::before {
+            content: '💙';
+            position: absolute;
+            top: -5px;
+            left: -25px;
+            font-size: 1rem;
+            animation: sparkle 2.5s ease-in-out infinite;
+            animation-delay: 1s;
+        }
+        
+        .slogan {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 15px;
+            letter-spacing: 1px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            font-weight: 500;
+            background: linear-gradient(45deg, #B0E0E6, #87CEEB);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: text-shimmer 4s linear infinite;
+        }
+        
+        @keyframes gradient-shift {
+            0%, 100% { background-position: 0% 50%; }
+            25% { background-position: 100% 50%; }
+            50% { background-position: 100% 100%; }
+            75% { background-position: 0% 100%; }
+        }
+        
+        @keyframes logo-glow {
+            0% { 
+                filter: drop-shadow(0 0 5px rgba(135, 206, 235, 0.3));
+            }
+            100% { 
+                filter: drop-shadow(0 0 20px rgba(135, 206, 235, 0.8));
+            }
+        }
+        
+        @keyframes sparkle {
+            0%, 100% { 
+                opacity: 0.7; 
+                transform: scale(1) rotate(0deg); 
+            }
+            50% { 
+                opacity: 1; 
+                transform: scale(1.2) rotate(180deg); 
+            }
+        }
+        
+        @keyframes text-shimmer {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 100% 50%; }
+        }
+        
+        .form-group {
+            margin-bottom: 25px;
+            position: relative;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 10px;
+            color: rgba(255, 255, 255, 0.95);
+            font-weight: 600;
+            font-size: 15px;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+            letter-spacing: 0.5px;
+        }
+        
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 16px 20px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            font-size: 16px;
+            font-weight: 500;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            color: rgba(255, 255, 255, 0.95);
+            box-shadow: 
+                0 8px 32px rgba(255, 105, 180, 0.15),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3),
+                inset 0 -1px 0 rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .form-group input::before,
+        .form-group select::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+        
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: rgba(255, 105, 180, 0.6);
+            background: rgba(255, 255, 255, 0.25);
+            box-shadow: 
+                0 8px 32px rgba(255, 105, 180, 0.3),
+                0 0 0 4px rgba(255, 105, 180, 0.2),
+                inset 0 1px 0 rgba(255, 255, 255, 0.4),
+                inset 0 -1px 0 rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+        
+        .form-group input:hover,
+        .form-group select:hover {
+            border-color: rgba(255, 255, 255, 0.4);
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-1px);
+        }
+        
+        .form-group input:focus::before {
+            left: 100%;
+        }
+        
+        .form-group input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+            font-weight: 400;
+        }
+        
+        .form-group select {
+            cursor: pointer;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%23ffffff' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+            background-position: right 12px center;
+            background-repeat: no-repeat;
+            background-size: 16px;
+            padding-right: 45px;
+        }
+        
+        .form-group select option {
+            background: linear-gradient(135deg, #ff9a9e, #fecfef);
+            color: #333;
+            padding: 10px;
+        }
+        
+        .error-message {
+            color: rgba(255, 255, 255, 0.95);
+            font-size: 13px;
+            margin-top: 8px;
+            display: none;
+            background: rgba(255, 20, 147, 0.2);
+            border: 1px solid rgba(255, 20, 147, 0.4);
+            border-radius: 12px;
+            padding: 8px 12px;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            animation: error-shake 0.5s ease-in-out;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+        }
+        
+        @keyframes error-shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+        
+        .login-btn {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, #E0F6FF, #B0E0E6, #87CEEB);
+            background-size: 200% 200%;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            font-size: 17px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            margin-top: 15px;
+            position: relative;
+            overflow: hidden;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 
+                0 10px 30px rgba(135, 206, 235, 0.4),
+                0 0 0 1px rgba(255, 255, 255, 0.2),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3);
+            animation: button-pulse 3s ease-in-out infinite;
+        }
+        
+        .login-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.6s;
+        }
+        
+        .login-btn:hover {
+            transform: translateY(-4px) scale(1.02);
+            box-shadow: 
+                0 20px 40px rgba(135, 206, 235, 0.6),
+                0 0 0 1px rgba(255, 255, 255, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.4);
+            background-position: 100% 0;
+            animation-duration: 1s;
+        }
+        
+        .login-btn:hover::before {
+            left: 100%;
+        }
+        
+        .login-btn:active {
+            transform: translateY(-1px) scale(0.98);
+            box-shadow: 
+                0 8px 25px rgba(135, 206, 235, 0.5),
+                0 0 0 1px rgba(255, 255, 255, 0.3);
+        }
+        
+        .login-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            background: linear-gradient(45deg, #ccc, #999);
+            animation: none;
+        }
+        
+        .login-btn:disabled::before {
+            display: none;
+        }
+        
+        @keyframes button-pulse {
+            0%, 100% { 
+                background-position: 0% 50%;
+                box-shadow: 
+                    0 10px 30px rgba(135, 206, 235, 0.4),
+                    0 0 0 1px rgba(255, 255, 255, 0.2);
+            }
+            50% { 
+                background-position: 100% 50%;
+                box-shadow: 
+                    0 15px 35px rgba(135, 206, 235, 0.6),
+                    0 0 0 1px rgba(255, 255, 255, 0.3);
+            }
+        }
+        
+        @media (max-width: 480px) {
+            body {
+                padding: 20px 10px;
+            }
+            
+            .login-container {
+                margin: 15px;
+                padding: 35px 25px;
+                max-width: 350px;
+            }
+            
+            .logo {
+                font-size: 2.5rem;
+            }
+            
+            .slogan {
+                font-size: 14px;
+            }
+            
+            .form-group input,
+            .form-group select {
+                padding: 14px 18px;
+                font-size: 15px;
+            }
+            
+            .login-btn {
+                padding: 16px;
+                font-size: 16px;
+            }
+        }
+        
+        /* 额外的动画和特效 */
+        .login-container {
+            animation: float-up 2s ease-out;
+        }
+        
+        @keyframes float-up {
+            0% {
+                opacity: 0;
+                transform: translateY(100px) scale(0.8);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+        
+        /* 粉色主题专用变量 */
+        :root {
+            --primary-pink: #ff6b9d;
+            --secondary-pink: #c44dff;
+            --accent-pink: #ff9a9e;
+            --light-pink: #fecfef;
+            --dark-pink: #ff1493;
+            --shadow-pink: rgba(255, 105, 180, 0.3);
+            --glow-pink: rgba(255, 105, 180, 0.6);
+        }
+        
+        /* 特殊效果增强 */
+        .login-container:hover .logo::after,
+        .login-container:hover .logo::before {
+            animation-duration: 1s;
+        }
+        
+        /* 滚动条样式 */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(45deg, var(--primary-pink), var(--secondary-pink));
+            border-radius: 4px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(45deg, var(--secondary-pink), var(--primary-pink));
+        }
+    </style>
+</head>
+<body>
+    <div class="particles">
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+    </div>
+    
+    <div class="login-container">
+        <div class="logo-section">
+            <div class="logo">DaiP</div>
+            <div class="slogan">✨ 智能聊天室 - 连接彼此的心 ✨</div>
+        </div>
+        
+        <!-- 登录/注册切换按钮 -->
+        <div style="text-align: center; margin-bottom: 20px;">
+            <button id="login-tab" class="mode-btn active">登录</button>
+            <button id="register-tab" class="mode-btn">注册</button>
+        </div>
+
+        <form id="login-form">
+            <div class="form-group">
+                <label for="username">用户名</label>
+                <input type="text" id="username" placeholder="请输入用户名" required>
+                <div class="error-message" id="username-error">用户名已被使用</div>
+            </div>
+            
+            <div class="form-group">
+                <label for="password">密码</label>
+                <input type="password" id="password" placeholder="请输入密码" required>
+                <div class="error-message" id="password-error">密码至少6个字符</div>
+            </div>
+            
+            <!-- 注册模式下显示确认密码 -->
+            <div class="form-group" id="confirm-password-group" style="display: none;">
+                <label for="confirm-password">确认密码</label>
+                <input type="password" id="confirm-password" placeholder="请再次输入密码">
+                <div class="error-message" id="confirm-password-error">两次输入的密码不一致</div>
+            </div>
+            
+            <div class="form-group">
+                <label for="server">服务器</label>
+                <select id="server" required>
+                    {% for server in servers %}
+                    <option value="{{ server.address }}">{{ server.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            
+            <button type="submit" class="login-btn" id="login-btn">登录</button>
+        </form>
+        
+        <style>
+            .mode-btn {
+                background: rgba(255, 255, 255, 0.2);
+                border: 1px solid rgba(255, 255, 255, 0.3);
+                color: rgba(255, 255, 255, 0.9);
+                padding: 8px 20px;
+                margin: 0 5px;
+                border-radius: 20px;
+                cursor: pointer;
+                font-size: 14px;
+                font-weight: 600;
+                transition: all 0.3s ease;
+                backdrop-filter: blur(10px);
+            }
+            
+            .mode-btn:hover {
+                background: rgba(255, 255, 255, 0.3);
+                transform: translateY(-2px);
+            }
+            
+            .mode-btn.active {
+                background: linear-gradient(135deg, #E0F6FF, #87CEEB);
+                color: white;
+                box-shadow: 0 4px 15px rgba(135, 206, 235, 0.4);
+            }
+        </style>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const form = document.getElementById('login-form');
+            const usernameInput = document.getElementById('username');
+            const passwordInput = document.getElementById('password');
+            const confirmPasswordInput = document.getElementById('confirm-password');
+            const usernameError = document.getElementById('username-error');
+            const passwordError = document.getElementById('password-error');
+            const confirmPasswordError = document.getElementById('confirm-password-error');
+            const loginBtn = document.getElementById('login-btn');
+            const confirmPasswordGroup = document.getElementById('confirm-password-group');
+            const loginTab = document.getElementById('login-tab');
+            const registerTab = document.getElementById('register-tab');
+            
+            // 当前模式：'login' 或 'register'
+            let currentMode = 'login';
+            
+            // 模式切换
+            loginTab.addEventListener('click', () => {
+                switchToLoginMode();
+            });
+            
+            registerTab.addEventListener('click', () => {
+                switchToRegisterMode();
+            });
+            
+            function switchToLoginMode() {
+                currentMode = 'login';
+                loginTab.classList.add('active');
+                registerTab.classList.remove('active');
+                loginBtn.textContent = '登录';
+                confirmPasswordGroup.style.display = 'none';
+                confirmPasswordInput.removeAttribute('required');
+                
+                // 清除错误
+                clearAllErrors();
+            }
+            
+            function switchToRegisterMode() {
+                currentMode = 'register';
+                registerTab.classList.add('active');
+                loginTab.classList.remove('active');
+                loginBtn.textContent = '注册';
+                confirmPasswordGroup.style.display = 'block';
+                confirmPasswordInput.setAttribute('required', 'required');
+                
+                // 清除错误
+                clearAllErrors();
+            }
+            
+            // 输入验证
+            usernameInput.addEventListener('input', () => {
+                usernameError.style.display = 'none';
+            });
+            
+            passwordInput.addEventListener('input', () => {
+                passwordError.style.display = 'none';
+            });
+            
+            confirmPasswordInput.addEventListener('input', () => {
+                confirmPasswordError.style.display = 'none';
+            });
+            
+            function clearAllErrors() {
+                usernameError.style.display = 'none';
+                passwordError.style.display = 'none';
+                confirmPasswordError.style.display = 'none';
+            }
+            
+            form.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                
+                const username = usernameInput.value.trim();
+                const password = passwordInput.value;
+                const server = document.getElementById('server').value;
+                
+                clearAllErrors();
+                
+                // 基本验证
+                if (!username) {
+                    usernameError.textContent = '请输入用户名';
+                    usernameError.style.display = 'block';
+                    return;
+                }
+                
+                if (password.length < 6) {
+                    passwordError.textContent = '密码至少6个字符';
+                    passwordError.style.display = 'block';
+                    return;
+                }
+                
+                if (currentMode === 'register') {
+                    const confirmPassword = confirmPasswordInput.value;
+                    if (password !== confirmPassword) {
+                        confirmPasswordError.textContent = '两次输入的密码不一致';
+                        confirmPasswordError.style.display = 'block';
+                        return;
+                    }
+                }
+                
+                try {
+                    loginBtn.disabled = true;
+                    loginBtn.textContent = currentMode === 'login' ? '登录中...' : '注册中...';
+                    
+                    let response;
+                    if (currentMode === 'login') {
+                        // 登录请求
+                        response = await fetch('/login_validate', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/x-www-form-urlencoded'
+                            },
+                            body: new URLSearchParams({
+                                username: username,
+                                password: password,
+                                server: server
+                            })
+                        });
+                    } else {
+                        // 注册请求
+                        response = await fetch('/register', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/x-www-form-urlencoded'
+                            },
+                            body: new URLSearchParams({
+                                username: username,
+                                password: password,
+                                confirm_password: confirmPasswordInput.value
+                            })
+                        });
+                    }
+                    
+                    const result = await response.json();
+                    
+                    if (result.success) {
+                        if (currentMode === 'register') {
+                            // 注册成功后切换到登录模式
+                            switchToLoginMode();
+                            alert(result.message);
+                        } else {
+                            // 登录成功，跳转到聊天室
+                            window.location.href = `/chat?nickname=${encodeURIComponent(username)}&server=${encodeURIComponent(server)}`;
+                        }
+                    } else {
+                        // 显示错误信息
+                        if (result.message.includes('用户名')) {
+                            usernameError.textContent = result.message;
+                            usernameError.style.display = 'block';
+                        } else if (result.message.includes('密码')) {
+                            passwordError.textContent = result.message;
+                            passwordError.style.display = 'block';
+                        } else {
+                            // 通用错误
+                            usernameError.textContent = result.message;
+                            usernameError.style.display = 'block';
+                        }
+                    }
+                } catch (error) {
+                    console.error('请求失败:', error);
+                    usernameError.textContent = '网络错误，请重试';
+                    usernameError.style.display = 'block';
+                } finally {
+                    loginBtn.disabled = false;
+                    loginBtn.textContent = currentMode === 'login' ? '登录' : '注册';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
